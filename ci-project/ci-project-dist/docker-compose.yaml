@@ -1,0 +1,71 @@
+version: '3.7'
+services:
+  mongo:
+    image: mongo:latest
+  mongo-service:
+    image: monovie/mongo-service:latest
+    build: ./mongo-service
+    depends_on:
+    - mongo
+  aes-encryption-service:
+    image: monovie/aes-encryption-service:latest
+    build: ./aes-encryption-service
+  email-service:
+    image: monovie/email-service:latest
+    build: ./email-service
+    environment:
+            GMAIL_USER: ilovedocker123@gmail.com
+            GMAIL_PASS: ilovedocker1!
+            SERVICE_NAME: ExampleProject
+    depends_on:
+    - mongo-service
+    - aes-encryption-service
+  secret-service:
+    image: monovie/secret-service:latest
+    build: ./secret-service
+    depends_on:
+    - mongo-service
+  session-token-service:
+    image: monovie/session-token-service:latest
+    build: ./session-token-service
+    depends_on:
+    - mongo-service
+    - aes-encryption-service
+  account-service:
+    image: monovie/account-service:latest
+    build: ./account-service
+    depends_on:
+    - secret-service
+    - mongo-service
+  dashboard-service:
+    image: monovie/dashboard-service:latest
+    build: ./dashboard-service
+    depends_on:
+    - account-service
+    - session-token-service
+  dashboard-client:
+    image: monovie/dashboard-client:latest
+    build: ./dashboard-client
+  authentication-client:
+    image: monovie/authentication-client:latest
+    build: ./authentication-client
+  authentication-service:
+    image: monovie/authentication-service:latest
+    build: ./authentication-service
+    environment:
+            ACTIVATION_LINK: http://35.194.15.229/authentication/api/activate
+    depends_on:
+    - account-service
+    - email-service
+    - session-token-service
+  gateway:
+    image: monovie/nginx:latest
+    ports:
+    - target: 80
+      published: 80
+    build: ./gateway
+    depends_on:
+    - dashboard-client
+    - dashboard-service
+    - authentication-client
+    - authentication-service
