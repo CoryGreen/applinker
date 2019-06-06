@@ -59,7 +59,7 @@ services:
     - email-service
     - session-token-service
   gateway:
-    image: monovie/nginx:{BUILD_NUMBER}
+    image: monovie/nginx:${BUILD_NUMBER}
     ports:
     - target: 80
       published: 80
