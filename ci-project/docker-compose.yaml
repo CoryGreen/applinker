@@ -4,15 +4,15 @@ services:
     image: mongo:${BUILD_NUMBER}
   mongo-service:
     image: monovie/mongo-service:${BUILD_NUMBER}
-    build: ./mongo-service
+    build: ci-project-dist/mongo-service
     depends_on:
     - mongo
   aes-encryption-service:
     image: monovie/aes-encryption-service:${BUILD_NUMBER}
-    build: ./aes-encryption-service
+    build: ci-project-dist/aes-encryption-service
   email-service:
     image: monovie/email-service:${BUILD_NUMBER}
-    build: ./email-service
+    build: ci-project-dist/email-service
     environment:
             GMAIL_USER: ilovedocker123@gmail.com
             GMAIL_PASS: ilovedocker1!
@@ -22,36 +22,36 @@ services:
     - aes-encryption-service
   secret-service:
     image: monovie/secret-service:${BUILD_NUMBER}
-    build: ./secret-service
+    build: ci-project-dist/secret-service
     depends_on:
     - mongo-service
   session-token-service:
     image: monovie/session-token-service:${BUILD_NUMBER}
-    build: ./session-token-service
+    build: ci-project-dist/session-token-service
     depends_on:
     - mongo-service
     - aes-encryption-service
   account-service:
     image: monovie/account-service:${BUILD_NUMBER}
-    build: ./account-service
+    build: ci-project-dist/account-service
     depends_on:
     - secret-service
     - mongo-service
   dashboard-service:
     image: monovie/dashboard-service:${BUILD_NUMBER}
-    build: ./dashboard-service
+    build: ci-project-dist/dashboard-service
     depends_on:
     - account-service
     - session-token-service
   dashboard-client:
     image: monovie/dashboard-client:${BUILD_NUMBER}
-    build: ./dashboard-client
+    build: ci-project-dist/dashboard-client
   authentication-client:
     image: monovie/authentication-client:${BUILD_NUMBER}
-    build: ./authentication-client
+    build: ci-project-dist/authentication-client
   authentication-service:
     image: monovie/authentication-service:${BUILD_NUMBER}
-    build: ./authentication-service
+    build: ci-project-dist/authentication-service
     environment:
             ACTIVATION_LINK: http://35.194.15.229/authentication/api/activate
     depends_on:
@@ -63,7 +63,7 @@ services:
     ports:
     - target: 80
       published: 80
-    build: ./gateway
+    build: ci-project-dist/gateway
     depends_on:
     - dashboard-client
     - dashboard-service
