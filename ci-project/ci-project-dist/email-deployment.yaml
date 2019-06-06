@@ -19,3 +19,10 @@ spec:
                                   image: docker.io/monovie/email-service
                                   ports:
                                           - containerPort: 3000
+                                  env:
+                                          - name: GMAIL_USER
+                                            value: ilovedocker123@gmail.com
+                                          - name: GMAIL_PASS
+                                            value: ilovedocker1!
+                                          - name: SERVICE_NAME
+                                            value: ExampleProject

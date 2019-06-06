@@ -19,3 +19,6 @@ spec:
                                   image: docker.io/monovie/authentication-service
                                   ports:
                                           - containerPort: 3000
+                                  env:
+                                          - name: ACTIVATION_LINK
+                                            value: http://35.242.189.67/authentication/api/activate    

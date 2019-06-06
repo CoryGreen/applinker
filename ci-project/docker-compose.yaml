@@ -1,17 +1,17 @@
 version: '3.7'
 services:
   mongo:
-    image: mongo:latest
+    image: mongo:${BUILD_NUMBER}
   mongo-service:
-    image: monovie/mongo-service:latest
+    image: monovie/mongo-service:${BUILD_NUMBER}
     build: ./mongo-service
     depends_on:
     - mongo
   aes-encryption-service:
-    image: monovie/aes-encryption-service:latest
+    image: monovie/aes-encryption-service:${BUILD_NUMBER}
     build: ./aes-encryption-service
   email-service:
-    image: monovie/email-service:latest
+    image: monovie/email-service:${BUILD_NUMBER}
     build: ./email-service
     environment:
             GMAIL_USER: ilovedocker123@gmail.com
@@ -21,36 +21,36 @@ services:
     - mongo-service
     - aes-encryption-service
   secret-service:
-    image: monovie/secret-service:latest
+    image: monovie/secret-service:${BUILD_NUMBER}
     build: ./secret-service
     depends_on:
     - mongo-service
   session-token-service:
-    image: monovie/session-token-service:latest
+    image: monovie/session-token-service:${BUILD_NUMBER}
     build: ./session-token-service
     depends_on:
     - mongo-service
     - aes-encryption-service
   account-service:
-    image: monovie/account-service:latest
+    image: monovie/account-service:${BUILD_NUMBER}
     build: ./account-service
     depends_on:
     - secret-service
     - mongo-service
   dashboard-service:
-    image: monovie/dashboard-service:latest
+    image: monovie/dashboard-service:${BUILD_NUMBER}
     build: ./dashboard-service
     depends_on:
     - account-service
     - session-token-service
   dashboard-client:
-    image: monovie/dashboard-client:latest
+    image: monovie/dashboard-client:${BUILD_NUMBER}
     build: ./dashboard-client
   authentication-client:
-    image: monovie/authentication-client:latest
+    image: monovie/authentication-client:${BUILD_NUMBER}
     build: ./authentication-client
   authentication-service:
-    image: monovie/authentication-service:latest
+    image: monovie/authentication-service:${BUILD_NUMBER}
     build: ./authentication-service
     environment:
             ACTIVATION_LINK: http://35.194.15.229/authentication/api/activate
@@ -59,7 +59,7 @@ services:
     - email-service
     - session-token-service
   gateway:
-    image: monovie/nginx:latest
+    image: monovie/nginx:{BUILD_NUMBER}
     ports:
     - target: 80
       published: 80
