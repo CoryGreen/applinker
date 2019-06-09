@@ -2,7 +2,7 @@
 For this project, we were given a set of components around which to build a continuous integration pipeline. The end result would be a secure page with which one could register or login to a webpage
 ## Architecture
 1 gateway is dependent on 2 clients and a series of services, 8 in total. The last service in the line of dependency is mongo-service, and this inn turn depends on a mongo database. There are two other service components but they were made redundant in the pipeline. The dependencies are charted out as follows, where dependency is from the bottom up (with implementation to match)
-![Network of dependencies](https://github.com/CoryGreen/applinkerdiagram/blob/master/applinker.drawio)
+![Network of dependencies](https://github.com/CoryGreen/applinkerdiagram/blob/master/applinker.png)
 ## Requirements
 A new project is started, this time on the Google Cloud Platform. On the platform and in the project a Virtual Machine Instance with 2 CPU cores and no less than 4GB memory, and featuring Ubuntu 18.04, is created as the first step. An email account is also required with which to send out activation links for newly registered users. And an image for each service and client should be pushed to DockerHub
 ## Procedure
