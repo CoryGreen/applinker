@@ -24,3 +24,5 @@ Afterwards, the updated repository is cloned from source control to the Cloud Sh
 kubectl apply -f ./
 ```
 Success of the procedure should be demonstrated by a corresponding working website
+
+To implement Continuous Integration, I use Jenkins. I create a Jenkins folder with a dockerfile and 5 yaml files and within the folder run the 'kubectl apply ...' command. I then obtain the jenkins pod and log into jenkins from there. This allows me to run a shell script within jenkins that can act on the images within my DockerHub page
