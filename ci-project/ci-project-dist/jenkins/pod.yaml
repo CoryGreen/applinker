@@ -5,6 +5,7 @@ metadata:
   labels: 
     app: jenkins
 spec:
+  serviceAccountName: jenkins-service-account
   securityContext:
     fsGroup: 1000
   containers:
